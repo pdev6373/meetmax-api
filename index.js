@@ -7,7 +7,9 @@ const mongoose = require("mongoose");
 const connectDB = require("./config/dbConnection");
 const getRoutes = require("./routes");
 const corsOptions = require("./config/corsOptions");
-const handlebars = require("express-handlebars");
+const helmet = require("helmet");
+const morgan = require("morgan");
+const bodyParser = require("body-parser");
 
 const app = express();
 const PORT = process.env.PORT || 3500;
@@ -15,20 +17,13 @@ const PORT = process.env.PORT || 3500;
 connectDB();
 
 app.use(cors(corsOptions));
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static("public"));
-app.use("/api", getRoutes());
-
-//Sets our app to use the handlebars engine
-app.set("view engine", "handlebars");
-//Sets handlebars configurations (we will go through them later on)
-app.engine(
-  "handlebars",
-  handlebars({
-    layoutsDir: __dirname + "/views",
-  })
-);
+app.use(helmet());
+app.use(morgan("common"));
+app.use("/api/v1", getRoutes());
 
 app.all("*", (req, res) => {
   res.status(404).json({ success: false, message: "Route not available" });

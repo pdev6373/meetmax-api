@@ -6,8 +6,8 @@ const AuthRoutes = () => {
   const router = express.Router();
 
   router.post("/register", AuthController.register);
-  router.get("/verify/:token", AuthController.verifyUser);
-  router.patch("/new-password/:token", AuthController.setNewPassword);
+  router.post("/verify", AuthController.verifyUser);
+  router.patch("/new-password", AuthController.setNewPassword);
   router.post("/forgot-password", AuthController.forgotPassword);
   router.post("/login", loginLimiter, AuthController.login);
   router.get("/refresh", AuthController.refresh);

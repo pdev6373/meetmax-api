@@ -1,6 +1,7 @@
 const express = require("express");
-const UserRoutes = require("./user");
 const AuthRoutes = require("./auth");
+const UserRoutes = require("./user");
+const PostRoutes = require("./post");
 const verifyJWT = require("../middleware/verifyJWT");
 
 const getRoutes = () => {
@@ -8,6 +9,7 @@ const getRoutes = () => {
   router.use("/auth", AuthRoutes());
   router.use(verifyJWT);
   router.use("/user", UserRoutes());
+  router.use("/post", PostRoutes());
 
   return router;
 };
