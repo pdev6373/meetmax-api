@@ -4,8 +4,6 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "node .",
-    "start": "node .",
     "dev": "nodemon ."
   },
   "dependencies": {
