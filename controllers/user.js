@@ -173,7 +173,7 @@ const getRecommendedUsers = async (req, res) => {
 const updateUser = async (req, res) => {
   const {
     id,
-    email,
+    email: userEmail,
     firstname,
     lastname,
     password,
@@ -188,6 +188,8 @@ const updateUser = async (req, res) => {
     profileVisibility,
     canBefollowed,
   } = req.body;
+
+  const email = normalizeEmail(userEmail);
 
   // <== VALIDATE USER ENTRIES ==>
   const isInvalid = [id, email, firstname, lastname, dateOfBirth, gender].some(
@@ -265,14 +267,18 @@ const updateUser = async (req, res) => {
       .json({ success: false, message: "User is not verified" });
 
   if (email !== user.email) {
-    const duplicate = await User.findOne({ email }).lean().exec();
+    const duplicate = await User.findOne({
+      email,
+    })
+      .lean()
+      .exec();
 
     if (duplicate && duplicate._id !== id)
       return res
         .status(400)
         .json({ success: false, message: "Email already taken" });
 
-    user.email = normalizeEmail(email); // Verify Email
+    user.email = email; // Verify Email
   }
 
   user.gender = gender;
@@ -332,7 +338,7 @@ const deleteUser = async (req, res) => {
 
   return res.json({
     success: true,
-    message: `User ${deletedUser.lastname} ${deletedUser.firstname} with email: ${deletedUser.email} deleted`,
+    message: `User ${deletedUser.lastname} ${deletedUser.firstname} with email: ${userEmail} deleted`,
   });
 };
 

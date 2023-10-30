@@ -17,6 +17,7 @@ async function sendVerificationEmail({ from, to, subject, body }) {
       to,
       subject,
       html: body,
+      text: body,
     });
   } catch (error) {
     console.error("Error occurred while sending email: ", error);

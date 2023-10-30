@@ -11,8 +11,16 @@ const sendEmail = require("../utils/email");
 // ⚡️ @Route -> api/auth/register (POST)
 // ⚡️ @Access -> Public
 const register = async (req, res) => {
-  const { email, firstname, lastname, password, dateOfBirth, gender } =
-    req.body;
+  const {
+    email: userEmail,
+    firstname,
+    lastname,
+    password,
+    dateOfBirth,
+    gender,
+  } = req.body;
+
+  const email = normalizeEmail(userEmail);
 
   // <== VALIDATE USER ENTRIES ==>
   const isInvalid = [
@@ -86,7 +94,7 @@ const register = async (req, res) => {
 
       return res.json({
         success: true,
-        message: `A verification email was sent to ${updatedUser.email}`,
+        message: `A verification email was sent to ${userEmail}`,
       });
     }
 
@@ -99,7 +107,7 @@ const register = async (req, res) => {
   const hashedPassword = await hash(password, Number(process.env.SALT));
 
   const userObject = {
-    email: normalizeEmail(email),
+    email,
     password: hashedPassword,
     firstname,
     lastname,
@@ -123,7 +131,7 @@ const register = async (req, res) => {
 
     return res.json({
       success: true,
-      message: `A verification email was sent to ${registeredUser.email}`,
+      message: `A verification email was sent to ${userEmail}`,
     });
   }
 
@@ -180,7 +188,8 @@ const verifyUser = async (req, res) => {
 // ⚡️ @Route -> api/auth/forgot-password (POST)
 // ⚡️ @Access -> Public
 const forgotPassword = async (req, res) => {
-  const { email } = req.body;
+  const { email: userEmail } = req.body;
+  const email = normalizeEmail(userEmail);
 
   if (!email)
     return res
@@ -219,7 +228,7 @@ const forgotPassword = async (req, res) => {
 
   res.json({
     success: true,
-    message: `A password reset email was sent to ${user.email}`,
+    message: `A password reset email was sent to ${userEmail}`,
   });
 };
 
@@ -278,7 +287,9 @@ const setNewPassword = async (req, res) => {
 // ⚡️ @Route -> api/auth/login (POST)
 // ⚡️ @Access -> Public
 const login = async (req, res) => {
-  const { email, password } = req.body;
+  const { email: userEmail, password } = req.body;
+
+  const email = normalizeEmail(userEmail);
 
   // <== VALIDATE USER ENTRIES ==>
   const isInvalid = [email, password].some((entry) => !entry);
@@ -372,7 +383,7 @@ const refresh = async (req, res) => {
       if (err)
         return res.status(403).send({ success: false, message: "Forbidden" });
 
-      const user = await User.findOne({ email: decoded.email })
+      const user = await User.findOne({ email: normalizeEmail(decoded.email) })
         .select("-password")
         .lean()
         .exec();
