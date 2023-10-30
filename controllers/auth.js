@@ -84,7 +84,6 @@ const register = async (req, res) => {
       const url = `https://meetmax-social.vercel.app/verify-email?token=${token}`;
 
       await sendVerificationEmail({
-        from: "Meetmax taiwoluborode@gmail.com",
         to: user.email,
         subject: "Verify your account",
         // body: `<h1>Please confirm your OTP</h1>
@@ -121,7 +120,6 @@ const register = async (req, res) => {
     const url = `https://meetmax-social.vercel.app/verify-email?token=${token}`;
 
     await sendVerificationEmail({
-      from: "Meetmax taiwoluborode@gmail.com",
       to: registeredUser.email,
       subject: "Verify your account",
       // body: `<h1>Please confirm your OTP</h1>
@@ -218,7 +216,6 @@ const forgotPassword = async (req, res) => {
   const url = `https://meetmax-social.vercel.app/reset-password?token=${token}`;
 
   await sendVerificationEmail({
-    from: "Meetmax taiwoluborode@gmail.com",
     to: user.email,
     subject: "Reset Password",
     // body: `<h1>Click the link below to reset your password</h1>

@@ -567,8 +567,8 @@ const sendEmail = (type, url) => {
                                       >
                                       ${
                                         type === "password-reset"
-                                          ? "To reset your password, please follow the link below:"
-                                          : "To verify your account, please follow the link below:"
+                                          ? "To reset your password, please copy the link below and paste it in your browser:"
+                                          : "To verify your account, please copy the link below and paste it in your browser:"
                                       }
                                       
                                     </span>
@@ -607,51 +607,18 @@ const sendEmail = (type, url) => {
                                 [endif]-->
                                 <div align="left">
                                   <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="" style="height:51px; v-text-anchor:middle; width:205px;" arcsize="2%"  stroke="f" fillcolor="#191c21"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
-                                  <a
-                                   href='${url}'
-                                    target="_blank"
-                                    class="v-button"
-                                    style="
-                                      box-sizing: border-box;
-                                      display: inline-block;
-                                      text-decoration: none;
-                                      -webkit-text-size-adjust: none;
-                                      text-align: center;
-                                      color: #ffffff;
-                                      background-color: #191c21;
-                                      border-radius: 1px;
-                                      -webkit-border-radius: 1px;
-                                      -moz-border-radius: 1px;
-                                      width: auto;
-                                      max-width: 100%;
-                                      overflow-wrap: break-word;
-                                      word-break: break-word;
-                                      word-wrap: break-word;
-                                      mso-border-alt: none;
-                                      font-size: 14px;
-                                    "
-                                  >
-                                    <span
+                                 <span
                                       style="
-                                        display: block;
-                                        padding: 15px 40px;
-                                        line-height: 120%;
+                                        font-family: 'Lato', sans-serif;
+                                        font-size: 14px;
+                                        line-height: 18px;
+                                        color: #666666;
+                                        
                                       "
-                                      ><span
-                                        style="
-                                          font-size: 18px;
-                                          line-height: 21.6px;
-                                        "
-                                        >
-                                        ${
-                                          type === "password-reset"
-                                            ? "Reset Password"
-                                            : "Verify Account"
-                                        }
-                                        </span
-                                      ></span
-                                    >
-                                  </a>
+                                      >
+                                      ${url}
+                                      
+                                    </span>
                                   <!--[if mso]></center></v:roundrect><![endif]-->
                                 </div>
                               </td>

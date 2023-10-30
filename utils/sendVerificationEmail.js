@@ -9,15 +9,14 @@ const transporter = createTransport({
   },
 });
 
-async function sendVerificationEmail({ from, to, subject, body }) {
+async function sendVerificationEmail({ to, subject, body }) {
   try {
     // Send email to user
     await transporter.sendMail({
-      from,
+      from: '"Meetmax" <adebayoluborode@gmail.com>',
       to,
       subject,
       html: body,
-      text: body,
     });
   } catch (error) {
     console.error("Error occurred while sending email: ", error);
