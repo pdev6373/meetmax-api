@@ -1,4 +1,4 @@
-const { hash, compare } = require("bcrypt");
+const { hash, compare } = require("bcryptjs");
 const isEmail = require("validator/lib/isEmail");
 const isDate = require("validator/lib/isDate");
 const normalizeEmail = require("validator/lib/normalizeEmail");
