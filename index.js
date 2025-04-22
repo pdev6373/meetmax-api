@@ -1,4 +1,4 @@
-require('dotenv').config({ path: '/etc/meetmax.env' });
+require('dotenv').config();
 require('express-async-errors');
 const express = require('express');
 const cookieParser = require('cookie-parser');
